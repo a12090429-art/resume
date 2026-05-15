@@ -222,26 +222,19 @@
   }
   .case-item.linked { cursor: pointer; }
   .case-item.linked:hover { background: var(--accent-light); transform: translateX(4px); }
-  .case-num {
-    font-family: var(--serif); font-size: 13px; color: var(--ink-4);
-    margin-bottom: 10px;
-  }
-  .case-title { font-family: var(--serif); font-size: clamp(18px, 2.5vw, 24px); margin-bottom: 10px; letter-spacing: -.01em; }
+  .case-num { font-family: var(--serif); font-size: 13px; color: var(--ink-4); margin-bottom: 10px; }
+  .case-title { font-family: var(--serif); font-size: clamp(18px, 2.5vw, 24px); margin-bottom: 4px; letter-spacing: -.01em; }
+  .case-product-desc { font-size: 14px; color: var(--ink-3); line-height: 1.6; margin-bottom: 20px; }
+  .case-meta { display: flex; flex-direction: column; gap: 10px; }
+  .case-meta-item { display: grid; grid-template-columns: 90px 1fr; gap: 16px; align-items: baseline; }
+  .case-meta-label { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-4); padding-top: 2px; }
+  .case-meta-value { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
   .case-desc { font-size: 14px; color: var(--ink-2); line-height: 1.65; max-width: 480px; }
   .case-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
-  .case-tag {
-    font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase;
-    padding: 4px 10px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink-3);
-  }
-  .case-arrow {
-    font-size: 20px; color: var(--ink-4); margin-top: 4px;
-    transition: transform .2s, color .2s;
-  }
+  .case-tag { font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink-3); }
+  .case-arrow { font-size: 20px; color: var(--ink-4); margin-top: 4px; transition: transform .2s, color .2s; }
   .case-item.linked:hover .case-arrow { transform: translate(3px,-3px); color: var(--accent); }
-  .case-status {
-    font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
-    color: var(--ink-4); margin-top: 4px; display: block;
-  }
+  .case-status { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-4); margin-top: 16px; display: block; }
 
   /* ── EDUCATION ── */
   .edu-item { padding: 32px 0; }
@@ -314,7 +307,7 @@
         <div class="hero-title-row">
           UX Designer
           <span class="hero-title-sep">·</span>
-          Product Design
+          Product Designer
           <span class="hero-title-sep">·</span>
           Taipei, Taiwan
         </div>
@@ -346,7 +339,7 @@
       </div>
       <div>
         <div class="hero-meta-label">Education</div>
-        <div class="hero-meta-value">Industrial Design, NCKU</div>
+        <div class="hero-meta-value">M.S. Industrial Design, NCKU</div>
       </div>
       <div>
         <div class="hero-meta-label">Expertise</div>
@@ -398,7 +391,7 @@
             <span class="skill-tag">Adobe Series</span>
             <span class="skill-tag">Confluence</span>
             <span class="skill-tag">Jira</span>
-            <span class="skill-tag">Claude</span>
+            <span class="skill-tag">AI Tools</span>
           </div>
         </div>
       </div>
@@ -409,8 +402,8 @@
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="container">
-    <div class="section-eyebrow reveal">Experience</div>
-    <h2 class="reveal">Work History</h2>
+    <div class="section-eyebrow reveal">Work Experience</div>
+    <h2 class="reveal">Work Experience</h2>
 
     <!-- TXOne -->
     <div class="exp-item reveal">
@@ -419,27 +412,32 @@
         <div class="exp-period">2019 – Present</div>
       </div>
       <div class="exp-company">TXOne Networks · B2B OT Cybersecurity · Taipei</div>
-      <p class="exp-summary">
-        Led end-to-end UX design across product-initiated features and VIP client engagements — independently owning problem definition, wireframing, cross-functional negotiation, and design delivery for a hardware+software security product used in industrial environments.
-      </p>
+      <p class="exp-summary">As the sole UX designer, I own the full design process — from problem definition and wireframing through cross-functional negotiation with PM, RD, and JM, to final delivery. My work spans two parallel tracks:</p>
+      <ul class="about-list" style="margin-bottom: 24px;">
+        <li><strong>PM-driven product development</strong><span class="about-list-body">Work closely with PMs to understand business goals and core feature value, then translate that into design proposals.</span></li>
+        <li><strong>VIP client sessions</strong><span class="about-list-body">Attend weekly client meetings to directly interview and clarify their root pain points, then propose solutions that address VIP needs while remaining applicable to the broader global user base.</span></li>
+      </ul>
+      <p class="exp-summary" style="margin-top: 24px;">Here are some of the key contributions and practices that define my work at TXOne:</p>
       <ul class="exp-bullets">
         <li>
-          <strong>Designed factory asset management system from 0 to launch</strong> — defined information architecture, multi-step operational flows, and data hierarchy for a complex B2B dashboard serving factory operators with varying digital literacy.
+          <strong>Led end-to-end UX design across a suite of industrial cybersecurity products</strong><br>
+          From portable scanning devices (Portable Inspector) and kiosk-based entry control stations (Safe Port) to a centralized management platform (ElementOne) handling asset inventory, scan logs, and vulnerability tracking.
         </li>
         <li>
-          <strong>Served as design bridge across clients, PM, RD, and JM</strong> — in weekly VIP client sessions, translated usage context and pain points into design proposals on the spot; identified tensions between client-specific requests and global product roadmap, negotiating solutions that balanced customization with platform-wide scalability.
+          <strong>Proposed and compared alternative design solutions under technical constraints</strong><br>
+          When RD raised timeline concerns, independently generated multiple approaches presented in Figma with clear trade-offs and scope implications, enabling PM to make informed prioritization decisions.
         </li>
         <li>
-          <strong>Proposed and compared alternative design solutions under technical constraints</strong> — when RD raised timeline concerns, independently generated multiple approaches with documented trade-offs and scope implications, enabling PM to make informed prioritization decisions.
+          <strong>User Research & Field Observation</strong><br>
+          Conducted user research through a combination of regular remote interviews and occasional on-site factory visits, observing real operational environments and translating findings into design directions.
         </li>
         <li>
-          <strong>Built and maintained Design System from scratch</strong> — established component structures, naming conventions, and usage guidelines that reduced design-to-development friction and improved delivery consistency.
+          <strong>Initiated pre-launch usability validation</strong><br>
+          Arranged real client walkthrough before product release, uncovering multiple usability issues simultaneously and implementing corrections prior to go-live.
         </li>
         <li>
-          <strong>Conducted contextual field research at client factory sites</strong> on multiple occasions, observing real operational environments (physical constraints, workflow patterns, operator behaviors) and translating findings into design directions.
-        </li>
-        <li>
-          <strong>Initiated pre-launch usability validation</strong> — arranged real client walkthrough before product release, uncovering multiple usability issues simultaneously and implementing corrections prior to go-live.
+          <strong>Built and maintained Design System from scratch</strong><br>
+          Established component structures, naming conventions, and usage guidelines that reduced design-to-development friction and improved delivery consistency.
         </li>
       </ul>
     </div>
@@ -461,78 +459,84 @@
 <!-- WORK / CASES -->
 <section id="work">
   <div class="container">
-    <div class="section-eyebrow reveal">Selected Work</div>
-    <h2 class="reveal">Case Studies</h2>
+    <div class="section-eyebrow reveal">Designs</div>
+    <h2 class="reveal">Product Design Work</h2>
 
     <div class="cases-grid reveal">
 
-      <!-- Case 1 -->
+      <!-- Product 1 -->
       <div class="case-item">
         <div>
           <div class="case-num">01</div>
-          <div class="case-title">Factory Asset Management — From 0 to Launch</div>
-          <p class="case-desc">
-            Designed a complex B2B asset tracking dashboard from scratch — defining information architecture, multi-step verification flows, and operator-facing interfaces for a security-critical industrial environment.
-          </p>
+          <div class="case-title">Portable Inspector</div>
+          <p class="case-product-desc">A portable USB malware scanner for factory machines — no software installation required.</p>
+          <div class="case-meta">
+            <div class="case-meta-item">
+              <span class="case-meta-label">Users</span>
+              <span class="case-meta-value">Factory operators executing routine security tasks based on administrator-defined SOPs</span>
+            </div>
+            <div class="case-meta-item">
+              <span class="case-meta-label">Design Focus</span>
+              <span class="case-meta-value">Empower administrators to build structured, foolproof workflows that operators can follow independently</span>
+            </div>
+          </div>
           <div class="case-tags">
             <span class="case-tag">End-to-end Design</span>
-            <span class="case-tag">Complex Flow</span>
-            <span class="case-tag">B2B Dashboard</span>
-            <span class="case-tag">Compliance</span>
+            <span class="case-tag">Operator-centered</span>
+            <span class="case-tag">Policy-driven Design</span>
           </div>
           <span class="case-status">↳ Case study coming soon</span>
         </div>
         <div class="case-arrow">↗</div>
       </div>
 
-      <!-- Case 2 -->
+      <!-- Product 2 -->
       <div class="case-item">
         <div>
           <div class="case-num">02</div>
-          <div class="case-title">Field Research to Product Direction</div>
-          <p class="case-desc">
-            How I built a multi-layer research practice inside a B2B company with limited user access — from factory site visits and client operation sessions to informal internal testing — and how each method shaped design decisions.
-          </p>
+          <div class="case-title">Safe Port</div>
+          <p class="case-product-desc">A kiosk scanning station deployed at factory entrances and high-security zones.</p>
+          <div class="case-meta">
+            <div class="case-meta-item">
+              <span class="case-meta-label">Users</span>
+              <span class="case-meta-value">Employees and external visitors with no prior system familiarity</span>
+            </div>
+            <div class="case-meta-item">
+              <span class="case-meta-label">Design Focus</span>
+              <span class="case-meta-value">Zero-instruction, self-guided scan experience for first-time users</span>
+            </div>
+          </div>
           <div class="case-tags">
-            <span class="case-tag">Contextual Inquiry</span>
-            <span class="case-tag">Usability Testing</span>
-            <span class="case-tag">Research Strategy</span>
+            <span class="case-tag">End-to-end Design</span>
+            <span class="case-tag">Kiosk UX</span>
+            <span class="case-tag">Zero Onboarding</span>
+            <span class="case-tag">0 to Launch</span>
           </div>
           <span class="case-status">↳ Case study coming soon</span>
         </div>
         <div class="case-arrow">↗</div>
       </div>
 
-      <!-- Case 3 -->
+      <!-- Product 3 -->
       <div class="case-item">
         <div>
           <div class="case-num">03</div>
-          <div class="case-title">Design System — Built from Scratch</div>
-          <p class="case-desc">
-            Established a Design System to bridge design and development — component architecture, token structure, usage documentation — and the measurable friction it removed from the delivery process.
-          </p>
-          <div class="case-tags">
-            <span class="case-tag">Design System</span>
-            <span class="case-tag">Component Design</span>
-            <span class="case-tag">Dev Collaboration</span>
+          <div class="case-title">ElementOne</div>
+          <p class="case-product-desc">A centralized OT security management platform consolidating data from Portable Inspector and Safe Port.</p>
+          <div class="case-meta">
+            <div class="case-meta-item">
+              <span class="case-meta-label">Users</span>
+              <span class="case-meta-value">Security administrators and team leads managing operations at different levels</span>
+            </div>
+            <div class="case-meta-item">
+              <span class="case-meta-label">Design Focus</span>
+              <span class="case-meta-value">Translate complex device status, asset inventory, and scan logs into clear, role-appropriate dashboards</span>
+            </div>
           </div>
-          <span class="case-status">↳ Case study coming soon</span>
-        </div>
-        <div class="case-arrow">↗</div>
-      </div>
-
-      <!-- Case 4 -->
-      <div class="case-item">
-        <div>
-          <div class="case-num">04</div>
-          <div class="case-title">Stroke Rehabilitation Device — Evidence-Based Design</div>
-          <p class="case-desc">
-            Graduate research project: literature review → multi-stakeholder interviews (physicians, physical therapists, occupational therapists) → device design → controlled experiment to validate effectiveness. Navigating three conflicting professional disciplines toward one coherent solution.
-          </p>
           <div class="case-tags">
-            <span class="case-tag">Mixed-Method Research</span>
-            <span class="case-tag">Multi-stakeholder</span>
-            <span class="case-tag">Experimental Validation</span>
+            <span class="case-tag">End-to-end Design</span>
+            <span class="case-tag">RBAC Design</span>
+            <span class="case-tag">0 to Launch</span>
           </div>
           <span class="case-status">↳ Case study coming soon</span>
         </div>
@@ -552,7 +556,8 @@
     <div class="reveal">
       <div class="edu-item">
         <div class="edu-school">National Cheng Kung University (成功大學)</div>
-        <div class="edu-degree">M.S. & B.S. · Department of Industrial Design · User Experience Research Lab</div>
+        <div class="edu-degree">Master's · User Experience Research Lab, Industrial Design</div>
+        <div class="edu-degree">Bachelor's · Industrial Design</div>
         <div class="edu-research">
           Graduate research in UX methodology, usability testing, and evidence-based design. Projects include stroke rehabilitation device design (literature review + multi-stakeholder interviews + experimental validation) · crowdfunding platform interface research (interviews + survey + prototype testing) · riding assistance design for elderly motorcyclists
         </div>
