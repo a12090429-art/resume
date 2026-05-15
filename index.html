@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Name — UX Designer</title>
+<title>Watson Hsu — UX Designer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Serif+TC:wght@400;500&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -19,7 +19,7 @@
     --accent: #1a4a6b;
     --accent-light: #e8eff5;
     --line: rgba(14,14,14,0.12);
-    --serif: 'DM Serif Display', Georgia, serif;
+    --serif: 'DM Serif Display', 'Noto Serif TC', Georgia, serif;
     --sans: 'DM Sans', system-ui, sans-serif;
     --max: 900px;
     --pad: clamp(24px, 5vw, 64px);
@@ -70,35 +70,53 @@
   /* ── HERO ── */
   #hero {
     min-height: 100svh;
-    display: flex; align-items: flex-end;
-    padding-top: 80px; padding-bottom: 80px;
+    display: flex; align-items: center;
+    padding-top: 100px; padding-bottom: 80px;
     border-top: none;
   }
   .hero-inner { width: 100%; }
-  .hero-label {
-    font-size: 12px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase;
-    color: var(--ink-3); margin-bottom: 24px;
-    display: flex; align-items: center; gap: 12px;
+  .hero-profile {
+    display: grid;
+    grid-template-columns: 140px 1fr;
+    gap: 40px;
+    align-items: flex-start;
+    margin-bottom: 56px;
   }
-  .hero-label::before {
-    content: ''; display: block; width: 32px; height: 1px; background: var(--ink-3);
+  .hero-photo-wrap {
+    width: 140px;
+    border-radius: 2px;
+    overflow: hidden;
+    background: var(--bg-2);
+    border: 1px solid var(--line);
+    flex-shrink: 0;
+    align-self: flex-start;
   }
-  h1 {
+  .hero-photo-wrap img { width: 100%; height: auto; display: block; }
+  .hero-photo-placeholder { font-size: 11px; color: var(--ink-4); text-align: center; line-height: 1.6; padding: 16px; }
+  .hero-name {
     font-family: var(--serif);
-    font-size: clamp(52px, 9vw, 108px);
-    line-height: .95; letter-spacing: -.03em;
-    margin-bottom: 40px;
+    font-size: clamp(36px, 6vw, 64px);
+    line-height: 1; letter-spacing: -.03em;
+    margin-bottom: 12px;
   }
-  h1 em { font-style: italic; color: var(--ink-2); }
+  .hero-title-row {
+    font-size: 15px; color: var(--ink-2);
+    margin-bottom: 20px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .hero-title-sep { color: var(--ink-4); }
+  .hero-contact-row { display: flex; gap: 20px; flex-wrap: wrap; margin-bottom: 20px; }
+  .hero-contact-item {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 13px; color: var(--ink-3); text-decoration: none; transition: color .2s;
+  }
+  .hero-contact-item:hover { color: var(--accent); }
   .hero-desc {
-    max-width: 520px;
-    font-size: 17px; font-weight: 300; color: var(--ink-2); line-height: 1.7;
-    margin-bottom: 48px;
+    font-size: 15px; color: var(--ink-2); line-height: 1.7; max-width: 520px;
   }
-  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
-    padding: 14px 28px; border-radius: 2px;
+    padding: 12px 24px; border-radius: 2px;
     font-size: 13px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
     text-decoration: none; transition: all .2s; cursor: pointer; border: none;
   }
@@ -107,12 +125,17 @@
   .btn-outline { background: transparent; color: var(--ink); border: 1px solid var(--line); }
   .btn-outline:hover { border-color: var(--ink); background: var(--bg-2); }
   .hero-meta {
-    margin-top: 80px; padding-top: 32px; border-top: 1px solid var(--line);
-    display: flex; gap: 40px; flex-wrap: wrap;
+    padding-top: 40px; border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px;
   }
-  .hero-meta-item { }
-  .hero-meta-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 4px; }
-  .hero-meta-value { font-size: 15px; font-weight: 500; }
+  .hero-meta-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 6px; }
+  .hero-meta-value { font-size: 14px; font-weight: 500; line-height: 1.4; }
+  h1 { font-family: var(--serif); font-size: clamp(32px, 5vw, 52px); line-height: 1.1; letter-spacing: -.02em; margin-bottom: 48px; }
+  @media (max-width: 680px) {
+    .hero-profile { grid-template-columns: 1fr; gap: 28px; }
+    .hero-photo-wrap { width: 100px; height: 100px; }
+    .hero-meta { grid-template-columns: 1fr 1fr; }
+  }
 
   /* ── SECTION HEADERS ── */
   .section-eyebrow {
@@ -128,32 +151,35 @@
     margin-bottom: 48px;
   }
 
-  /* ── POSITIONING ── */
-  .positioning-block {
-    background: var(--accent);
-    color: #fff;
-    padding: 56px 48px;
-    border-radius: 2px;
-    margin-bottom: 64px;
-    position: relative; overflow: hidden;
-  }
-  .positioning-block::before {
-    content: '"';
-    font-family: var(--serif); font-size: 240px; line-height: .7;
-    position: absolute; top: -20px; right: 32px;
-    color: rgba(255,255,255,.07);
-    pointer-events: none;
-  }
-  .positioning-text {
-    font-family: var(--serif); font-size: clamp(20px, 3vw, 28px);
-    line-height: 1.4; font-style: italic;
-    position: relative; z-index: 1;
-  }
-
   /* ── ABOUT ── */
   .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; }
   .about-text { font-size: 16px; color: var(--ink-2); line-height: 1.8; }
   .about-text p + p { margin-top: 20px; }
+  .about-text p + ul { margin-top: 12px; }
+  .about-text strong {
+    font-weight: 500;
+    color: var(--ink);
+    background: linear-gradient(
+      104deg,
+      transparent 2%,
+      rgba(147, 197, 222, 0.35) 4%,
+      rgba(147, 197, 222, 0.5) 30%,
+      rgba(147, 197, 222, 0.45) 60%,
+      rgba(147, 197, 222, 0.3) 90%,
+      transparent 98%
+    );
+    border-radius: 1px 4px 3px 2px / 2px 3px 4px 1px;
+    padding: 0.05em 0.25em 0.05em 0.15em;
+    margin: 0 -0.1em;
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+  .exp-bullets strong { color: var(--ink); font-weight: 500; }
+  .about-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; padding: 0; }
+  .about-list li { font-size: 15px; color: var(--ink-2); line-height: 1.65; padding-left: 14px; position: relative; }
+  .about-list li::before { content: '·'; position: absolute; left: 0; color: var(--ink-4); font-size: 16px; top: 0; }
+  .about-list strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
+  .about-list-body { display: block; margin-top: 2px; }
   .skills-group + .skills-group { margin-top: 28px; }
   .skills-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 10px; }
   .skills-list { display: flex; flex-wrap: wrap; gap: 8px; }
@@ -266,7 +292,7 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <span class="nav-name">Your Name</span>
+  <span class="nav-name">Watson Hsu</span>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#experience">Experience</a></li>
@@ -278,31 +304,53 @@
 <!-- HERO -->
 <section id="hero">
   <div class="container hero-inner">
-    <div class="hero-label">UX Designer · Product Design · Taipei</div>
-    <h1>
-      Design that helps<br>
-      people move forward<br>
-      <em>with confidence.</em>
-    </h1>
-    <p class="hero-desc">
-      6 years designing complex B2B products at the intersection of security, compliance, and real human workflows. I turn difficult operational realities into interfaces people can trust.
-    </p>
-    <div class="hero-actions">
-      <a href="#work" class="btn btn-primary">View Work</a>
-      <a href="#contact" class="btn btn-outline">Get in Touch</a>
+    <div class="hero-profile reveal">
+      <!-- 照片區塊：將 photo-placeholder 換成 <img src="your-photo.jpg" alt="Your Name"> -->
+      <div class="hero-photo-wrap">
+        <img src="photo.jpg" alt="Your Name">
+      </div>
+      <div class="hero-info">
+        <div class="hero-name">徐華錚 <span style="font-size:0.55em; letter-spacing:-.01em; color:var(--ink-3); font-family:var(--sans); font-weight:400;">Watson Hsu</span></div>
+        <div class="hero-title-row">
+          UX Designer
+          <span class="hero-title-sep">·</span>
+          Product Design
+          <span class="hero-title-sep">·</span>
+          Taipei, Taiwan
+        </div>
+        <div class="hero-contact-row">
+          <a href="mailto:a12090429@gmail.com" class="hero-contact-item">
+            <span class="hero-contact-icon">✉</span> a12090429@gmail.com
+          </a>
+          <a href="https://linkedin.com/in/yourhandle" target="_blank" class="hero-contact-item">
+            <span class="hero-contact-icon">↗</span> LinkedIn
+          </a>
+        </div>
+        <p class="hero-desc">
+          6 years designing B2B products at the intersection of user experience, business goals, and industrial cybersecurity — leading end-to-end design for hardware and software systems at TXOne Networks, with a background in industrial design and UX research.
+        </p>
+        <div class="hero-actions">
+          <a href="#work" class="btn btn-primary">View Work</a>
+          <a href="#experience" class="btn btn-outline">Experience</a>
+        </div>
+      </div>
     </div>
-    <div class="hero-meta">
-      <div class="hero-meta-item">
-        <div class="hero-meta-label">Years of Experience</div>
-        <div class="hero-meta-value">9 Years</div>
+    <div class="hero-meta reveal">
+      <div>
+        <div class="hero-meta-label">Experience</div>
+        <div class="hero-meta-value">9 Years Total</div>
       </div>
-      <div class="hero-meta-item">
-        <div class="hero-meta-label">Current Role</div>
-        <div class="hero-meta-value">UX Designer, TXOne Networks</div>
+      <div>
+        <div class="hero-meta-label">Current</div>
+        <div class="hero-meta-value">TXOne Networks</div>
       </div>
-      <div class="hero-meta-item">
+      <div>
+        <div class="hero-meta-label">Education</div>
+        <div class="hero-meta-value">Industrial Design, NCKU</div>
+      </div>
+      <div>
         <div class="hero-meta-label">Expertise</div>
-        <div class="hero-meta-value">B2B · HW+SW · Research</div>
+        <div class="hero-meta-value">UX Research & Design</div>
       </div>
     </div>
   </div>
@@ -312,22 +360,14 @@
 <section id="about">
   <div class="container">
     <div class="section-eyebrow reveal">About</div>
-    <div class="positioning-block reveal">
-      <p class="positioning-text">
-        "I design experiences that help people move forward with confidence in high-stakes, complex environments — whether that's a factory operator managing security assets, or a first-time user completing a financial verification flow."
-      </p>
-    </div>
 
     <div class="about-grid reveal">
       <div class="about-text">
         <p>
-          I'm a UX designer with 6 years at TXOne Networks, a B2B OT cybersecurity company, where I lead design across two workflows: PM-initiated product development and weekly VIP client feature sessions. In both, my role is the same — understand the real problem, propose design solutions, and navigate the space between what clients want, what engineering can build, and what the global product roadmap allows.
+          I'm a UX designer with 6 years at TXOne Networks, a B2B OT cybersecurity company, specializing in end-to-end design for complex hardware and software systems. I joined when the company had a single product, and have since owned the UX design for three additional products from concept to launch — translating ambiguous goals into feasible design solutions, then validating and refining through each stage of development.
         </p>
         <p>
-          My background spans industrial design (NCKU), graduate-level UX research, and hands-on work designing hardware+software integrated systems. I've conducted contextual field research at factory sites, run mixed-method studies, and built Design Systems from the ground up.
-        </p>
-        <p>
-          I'm drawn to products where the stakes are high and the constraints are real — which is why I'm moving toward fintech, where good design genuinely changes whether someone trusts a platform with their money.
+          I hold a degree in industrial design from NCKU and conducted graduate research in the User Experience Research Lab, where I developed a foundation in mixed-method UX research.
         </p>
       </div>
       <div>
@@ -336,11 +376,9 @@
           <div class="skills-list">
             <span class="skill-tag">UI / UX Design</span>
             <span class="skill-tag">Product Design</span>
-            <span class="skill-tag">Information Architecture</span>
             <span class="skill-tag">Wireframing</span>
             <span class="skill-tag">Prototyping</span>
             <span class="skill-tag">Design System</span>
-            <span class="skill-tag">HW+SW Integration</span>
           </div>
         </div>
         <div class="skills-group">
@@ -357,17 +395,10 @@
           <div class="skills-label">Tools</div>
           <div class="skills-list">
             <span class="skill-tag">Figma</span>
-            <span class="skill-tag">Design Tokens</span>
-            <span class="skill-tag">Component Authoring</span>
-          </div>
-        </div>
-        <div class="skills-group">
-          <div class="skills-label">Collaboration</div>
-          <div class="skills-list">
-            <span class="skill-tag">Cross-functional Alignment</span>
-            <span class="skill-tag">Trade-off Documentation</span>
-            <span class="skill-tag">Requirements Translation</span>
-            <span class="skill-tag">Client-facing Design</span>
+            <span class="skill-tag">Adobe Series</span>
+            <span class="skill-tag">Confluence</span>
+            <span class="skill-tag">Jira</span>
+            <span class="skill-tag">Claude</span>
           </div>
         </div>
       </div>
@@ -379,7 +410,7 @@
 <section id="experience">
   <div class="container">
     <div class="section-eyebrow reveal">Experience</div>
-    <h2 class="reveal">Where I've worked.</h2>
+    <h2 class="reveal">Work History</h2>
 
     <!-- TXOne -->
     <div class="exp-item reveal">
@@ -431,7 +462,7 @@
 <section id="work">
   <div class="container">
     <div class="section-eyebrow reveal">Selected Work</div>
-    <h2 class="reveal">Four case studies.</h2>
+    <h2 class="reveal">Case Studies</h2>
 
     <div class="cases-grid reveal">
 
@@ -516,16 +547,14 @@
 <section id="education">
   <div class="container">
     <div class="section-eyebrow reveal">Education</div>
-    <h2 class="reveal">Academic background.</h2>
+    <h2 class="reveal">Education</h2>
 
     <div class="reveal">
       <div class="edu-item">
-        <div class="edu-school">National Cheng Kung University</div>
-        <div class="edu-degree">M.S. & B.S. · Department of Industrial Design</div>
+        <div class="edu-school">National Cheng Kung University (成功大學)</div>
+        <div class="edu-degree">M.S. & B.S. · Department of Industrial Design · User Experience Research Lab</div>
         <div class="edu-research">
-          Graduate research: Stroke rehabilitation device (literature review + multi-stakeholder interviews + experimental validation) ·
-          Crowdfunding platform interface (mixed-method: interviews + survey + prototype testing) ·
-          Riding assistance design for elderly motorcyclists
+          Graduate research in UX methodology, usability testing, and evidence-based design. Projects include stroke rehabilitation device design (literature review + multi-stakeholder interviews + experimental validation) · crowdfunding platform interface research (interviews + survey + prototype testing) · riding assistance design for elderly motorcyclists
         </div>
       </div>
     </div>
@@ -538,13 +567,13 @@
     <div class="section-eyebrow reveal">Contact</div>
     <div class="contact-grid reveal">
       <div>
-        <div class="contact-heading">Let's<br>talk.</div>
+        <div class="contact-heading">Contact</div>
       </div>
       <div class="contact-links">
-        <a href="mailto:your@email.com" class="contact-link">
+        <a href="mailto:a12090429@gmail.com" class="contact-link">
           <div>
             <div class="contact-link-label">Email</div>
-            <div class="contact-link-value">your@email.com</div>
+            <div class="contact-link-value">a12090429@gmail.com</div>
           </div>
           <span class="contact-link-arrow">↗</span>
         </a>
@@ -569,7 +598,7 @@
 
 <!-- FOOTER -->
 <footer>
-  <span>© 2025 Your Name</span>
+  <span>© 2026 Watson Hsu · 徐華錚</span>
   <span>UX Designer · Taipei, Taiwan</span>
 </footer>
 
