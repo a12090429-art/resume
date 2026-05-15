@@ -114,7 +114,16 @@
     font-size: 15px; color: var(--ink-2); line-height: 1.7;
     margin-top: 12px; margin-bottom: 0;
   }
-  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-top: 24px; margin-bottom: 40px; }
+  .hero-about {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 48px;
+    margin-top: 12px;
+    margin-bottom: 32px;
+  }
+  .hero-about-text { font-size: 15px; color: var(--ink-2); line-height: 1.8; }
+  .hero-about-text p + p { margin-top: 16px; }
+  .hero-actions { display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 40px; }
   .btn {
     display: inline-flex; align-items: center; gap: 8px;
     padding: 12px 24px; border-radius: 2px;
@@ -136,6 +145,7 @@
     .hero-profile { grid-template-columns: 1fr; gap: 28px; }
     .hero-photo-wrap { width: 100px; height: 100px; }
     .hero-meta { grid-template-columns: 1fr 1fr; }
+    .hero-about { grid-template-columns: 1fr; gap: 32px; }
   }
 
   /* ── SECTION HEADERS ── */
@@ -288,7 +298,7 @@
 <nav id="nav">
   <span class="nav-name">Watson Hsu</span>
   <ul class="nav-links">
-    <li><a href="#about">About</a></li>
+    <li><a href="#hero">About</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#work">Work</a></li>
     <li><a href="#contact">Contact</a></li>
@@ -299,9 +309,8 @@
 <section id="hero">
   <div class="container hero-inner">
     <div class="hero-profile reveal">
-      <!-- 照片區塊：將 photo-placeholder 換成 <img src="your-photo.jpg" alt="Your Name"> -->
       <div class="hero-photo-wrap">
-        <img src="photo.jpg" alt="Your Name">
+        <img src="photo.jpg" alt="Watson Hsu">
       </div>
       <div class="hero-info">
         <div class="hero-name">徐華錚 <span style="font-size:0.55em; letter-spacing:-.01em; color:var(--ink-3); font-family:var(--sans); font-weight:400;">Watson Hsu</span></div>
@@ -322,49 +331,17 @@
         </div>
       </div>
     </div>
-    <p class="hero-desc reveal">
-      6 years designing B2B products at the intersection of user experience, business goals, and industrial cybersecurity — leading end-to-end design for hardware and software systems at TXOne Networks, with a background in industrial design and UX research.
-    </p>
-    <div class="hero-actions reveal">
-      <a href="#work" class="btn btn-primary">View Work</a>
-      <a href="#experience" class="btn btn-outline">Experience</a>
-    </div>
-    <div class="hero-meta reveal">
-      <div>
-        <div class="hero-meta-label">Experience</div>
-        <div class="hero-meta-value">9 Years Total</div>
-      </div>
-      <div>
-        <div class="hero-meta-label">Current</div>
-        <div class="hero-meta-value">TXOne Networks</div>
-      </div>
-      <div>
-        <div class="hero-meta-label">Education</div>
-        <div class="hero-meta-value">M.S. Industrial Design, NCKU</div>
-      </div>
-      <div>
-        <div class="hero-meta-label">Expertise</div>
-        <div class="hero-meta-value">UX Research & Design</div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<!-- ABOUT -->
-<section id="about">
-  <div class="container">
-    <div class="section-eyebrow reveal">About</div>
-
-    <div class="about-grid reveal">
-      <div class="about-text">
+    <div class="hero-about reveal">
+      <div class="hero-about-text">
         <p>
-          I'm a UX designer with 6 years at TXOne Networks, a B2B OT cybersecurity company, specializing in end-to-end design for complex hardware and software systems. I joined when the company had a single product, and have since owned the UX design for three additional products from concept to launch — translating ambiguous goals into feasible design solutions, then validating and refining through each stage of development.
+          I'm a UX designer with 6 years at TXOne Networks, a B2B OT cybersecurity company, where I specialize in end-to-end design for hardware and software systems. I joined when the company had a single product, and have since owned the UX design for three additional products from concept to launch — translating ambiguous goals into feasible design solutions, and iteratively validating and refining through each stage of development.
         </p>
         <p>
-          I hold a degree in industrial design from NCKU and conducted graduate research in the User Experience Research Lab, where I developed a foundation in mixed-method UX research.
+          I studied industrial design at NCKU and conducted graduate research in the User Experience Research Lab, where I developed a foundation in mixed-method UX research.
         </p>
       </div>
-      <div>
+      <div class="hero-about-skills">
         <div class="skills-group">
           <div class="skills-label">Design</div>
           <div class="skills-list">
@@ -395,6 +372,25 @@
             <span class="skill-tag">AI Tools</span>
           </div>
         </div>
+      </div>
+    </div>
+
+    <div class="hero-meta reveal">
+      <div>
+        <div class="hero-meta-label">Experience</div>
+        <div class="hero-meta-value">9 Years Total</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Current</div>
+        <div class="hero-meta-value">TXOne Networks</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Education</div>
+        <div class="hero-meta-value">M.S. Industrial Design, NCKU</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Expertise</div>
+        <div class="hero-meta-value">UX Research & Design</div>
       </div>
     </div>
   </div>
