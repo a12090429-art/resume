@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portable Inspector — Watson Hsu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Serif+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0e0e0e; --ink-2: #3a3a3a; --ink-3: #7a7a7a; --ink-4: #b0b0b0;
+  --bg: #f5f3ee; --bg-2: #edeae3; --accent: #1a4a6b; --accent-light: #e8eff5;
+  --line: rgba(14,14,14,0.12);
+  --serif: 'DM Serif Display', 'Noto Serif TC', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --max: 900px; --pad: clamp(24px, 5vw, 64px);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+/* NAV */
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--line); transition: box-shadow .3s; }
+nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.06); }
+.nav-inner { max-width: var(--max); margin: 0 auto; padding: 20px var(--pad); display: flex; align-items: center; justify-content: space-between; }
+.nav-name { font-family: var(--serif); font-size: 18px; letter-spacing: -.02em; text-decoration: none; color: var(--ink); }
+.nav-back { font-size: 13px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color .2s; }
+.nav-back:hover { color: var(--ink); }
+
+/* LAYOUT */
+.container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+section { padding: 80px 0; }
+section + section { border-top: 1px solid var(--line); }
+
+/* REVEAL */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* HERO */
+#hero { padding-top: 140px; border-top: none; }
+.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.hero-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.hero-title { font-family: var(--serif); font-size: clamp(40px, 7vw, 80px); line-height: 1; letter-spacing: -.03em; margin-bottom: 32px; }
+.hero-meta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 32px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 48px; }
+.hero-meta-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 6px; }
+.hero-meta-value { font-size: 14px; font-weight: 500; line-height: 1.5; }
+
+/* DEVICE IMAGE */
+.device-image { width: 100%; border-radius: 2px; overflow: hidden; background: #1a1a1a; display: flex; align-items: center; justify-content: center; padding: 48px; margin-bottom: 0; }
+.device-image img { max-width: 600px; width: 100%; }
+
+/* SECTION LABELS */
+.sec-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.sec-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.sec-title { font-family: var(--serif); font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: -.02em; margin-bottom: 32px; }
+
+/* OVERVIEW */
+.overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.overview-text { font-size: 15px; color: var(--ink-2); line-height: 1.8; }
+.overview-text p + p { margin-top: 16px; }
+.overview-meta { display: flex; flex-direction: column; gap: 24px; }
+.meta-block-label { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 6px; }
+.meta-block-value { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+
+/* FLOW */
+.flow-image { width: 100%; border-radius: 2px; overflow: hidden; background: #2a2a2a; cursor: zoom-in; }
+.flow-image img { width: 100%; display: block; transition: transform .3s; }
+.flow-image:hover img { transform: scale(1.01); }
+.image-caption { font-size: 12px; color: var(--ink-4); margin-top: 10px; text-align: center; }
+
+/* UI SCREENS */
+.screens-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 16px; }
+.screen-item { border-radius: 2px; overflow: hidden; background: var(--bg-2); }
+.screen-item img { width: 100%; display: block; }
+.screen-caption { padding: 12px 14px; font-size: 12px; color: var(--ink-3); line-height: 1.5; }
+.screen-caption strong { display: block; font-size: 13px; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
+
+/* TAGS */
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.tag { font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink-3); }
+
+/* BACK LINK */
+.back-section { padding: 60px 0; text-align: center; border-top: 1px solid var(--line); }
+.back-link { font-size: 13px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; transition: color .2s; }
+.back-link:hover { color: var(--ink); }
+
+/* FOOTER */
+footer { border-top: 1px solid var(--line); padding: 24px var(--pad); display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-4); max-width: var(--max); margin: 0 auto; }
+
+@media (max-width: 680px) {
+  .hero-meta-row { grid-template-columns: 1fr 1fr; }
+  .overview-grid { grid-template-columns: 1fr; }
+  .screens-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Watson Hsu</a>
+    <a href="index.html#work" class="nav-back">← Back</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="container">
+    <div class="hero-eyebrow reveal">Product Design · 01</div>
+    <h1 class="hero-title reveal">Portable Inspector</h1>
+    <div class="hero-meta-row reveal">
+      <div>
+        <div class="hero-meta-label">Product Type</div>
+        <div class="hero-meta-value">Portable USB Malware Scanner</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Users</div>
+        <div class="hero-meta-value">Factory Operators & IT Administrators</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">My Role</div>
+        <div class="hero-meta-value">End-to-end UX Design, 0 to Launch</div>
+      </div>
+    </div>
+    <div class="device-image reveal">
+      <img src="pi-device.png" alt="Portable Inspector device">
+    </div>
+  </div>
+</section>
+
+<!-- OVERVIEW -->
+<section>
+  <div class="container">
+    <div class="sec-eyebrow reveal">Overview</div>
+    <div class="overview-grid reveal">
+      <div class="overview-text">
+        <p>
+          Portable Inspector is a USB scanning device that detects malware on factory machines without requiring software installation — critical for industrial environments where traditional antivirus solutions cannot be deployed on sensitive OT equipment.
+        </p>
+        <p>
+          The device is used by factory operators who follow security SOPs defined by IT administrators. Since the interface cannot guide operators directly through contextual UI cues, the design challenge was ensuring administrators could configure clear, structured workflows that operators can execute independently and consistently.
+        </p>
+        <div class="tag-row">
+          <span class="tag">End-to-end Design</span>
+          <span class="tag">Operator-centered</span>
+          <span class="tag">Policy-driven Design</span>
+          <span class="tag">0 to Launch</span>
+        </div>
+      </div>
+      <div class="overview-meta">
+        <div>
+          <div class="meta-block-label">Design Focus</div>
+          <div class="meta-block-value">Empower administrators to build structured, foolproof workflows that operators can follow independently — without relying on UI-level guidance during execution.</div>
+        </div>
+        <div>
+          <div class="meta-block-label">Key Flows</div>
+          <div class="meta-block-value">Virus definition update · Policy sync · Scan execution · Log upload</div>
+        </div>
+        <div>
+          <div class="meta-block-label">Context</div>
+          <div class="meta-block-value">Industrial OT environments · No internet connectivity · Operators with limited IT knowledge</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- UI FLOW -->
+<section>
+  <div class="container">
+    <div class="sec-eyebrow reveal">UI Flow</div>
+    <h2 class="sec-title reveal">FTS Scan Flow</h2>
+    <div class="flow-image reveal">
+      <img src="pi-flow.png" alt="Portable Inspector FTS UI Flow">
+    </div>
+    <p class="image-caption reveal">Full UI flow for FTS (Fab Tool Scan) — from scan initiation to result review</p>
+  </div>
+</section>
+
+<!-- UI SCREENS -->
+<section>
+  <div class="container">
+    <div class="sec-eyebrow reveal">UI Screens</div>
+    <h2 class="sec-title reveal">Key Interfaces</h2>
+    <div class="screens-grid reveal">
+      <div class="screen-item">
+        <img src="pi-ui-1.png" alt="Portable Inspector Get Started">
+        <div class="screen-caption">
+          <strong>Get Started</strong>
+          Entry screen displaying current scan settings and status before initiating a scan
+        </div>
+      </div>
+      <div class="screen-item">
+        <img src="pi-ui-fts.png" alt="Portable Inspector FTS Scan">
+        <div class="screen-caption">
+          <strong>FTS Scan — Running</strong>
+          Active scanning state with real-time status, hostname, and port information
+        </div>
+      </div>
+      <div class="screen-item">
+        <img src="pi-ui-osscan.png" alt="Portable Inspector OS Scan">
+        <div class="screen-caption">
+          <strong>OS Scan — Auto Start</strong>
+          Automated scan countdown with clear status communication for operator handoff
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BACK -->
+<div class="back-section">
+  <a href="index.html#work" class="back-link">← Back to all work</a>
+</div>
+
+<footer>
+  <span>Watson Hsu · 徐華錚</span>
+  <span>© 2026</span>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 40);
+});
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+      observer.unobserve(entry.target);
+    }
+  });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Watson Hsu — UX Designer</title>
+<title>Watson Hsu</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Serif+TC:wght@400;500&display=swap" rel="stylesheet">
 <style>
@@ -40,13 +40,17 @@
   /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 20px var(--pad);
     background: var(--bg);
     border-bottom: 1px solid var(--line);
     transition: box-shadow .3s;
   }
   nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.06); }
+  .nav-inner {
+    max-width: var(--max);
+    margin: 0 auto;
+    padding: 20px var(--pad);
+    display: flex; align-items: center; justify-content: space-between;
+  }
   .nav-name { font-family: var(--serif); font-size: 18px; letter-spacing: -.02em; }
   .nav-links { display: flex; gap: 32px; list-style: none; }
   .nav-links a {
@@ -188,7 +192,7 @@
   .exp-bullets strong { color: var(--ink); font-weight: 500; }
   .about-list { list-style: none; display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; padding: 0; }
   .about-list li { font-size: 15px; color: var(--ink-2); line-height: 1.65; padding-left: 14px; position: relative; }
-  .about-list li::before { content: '·'; position: absolute; left: 0; color: var(--ink-4); font-size: 16px; top: 0; }
+  .about-list li::before { content: '·'; position: absolute; left: 0; color: var(--ink-3); font-size: 20px; top: -2px; }
   .about-list strong { display: block; color: var(--ink); font-weight: 500; margin-bottom: 2px; }
   .about-list-body { display: block; margin-top: 2px; }
   .skills-group + .skills-group { margin-top: 28px; }
@@ -204,7 +208,7 @@
   /* ── EXPERIENCE ── */
   .exp-item { padding: 40px 0; }
   .exp-item + .exp-item { border-top: 1px solid var(--line); }
-  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
+  .exp-header { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; flex-wrap: wrap; gap: 8px; }
   .exp-role { font-family: var(--serif); font-size: 22px; letter-spacing: -.01em; }
   .exp-period { font-size: 13px; color: var(--ink-4); font-weight: 500; white-space: nowrap; }
   .exp-company { font-size: 14px; color: var(--accent); font-weight: 500; letter-spacing: .02em; margin-bottom: 20px; }
@@ -225,26 +229,64 @@
   .case-item {
     background: var(--bg-2); border-radius: 2px;
     padding: 40px 44px;
-    display: grid; grid-template-columns: 1fr auto;
-    gap: 24px; align-items: start;
     text-decoration: none; color: inherit;
-    transition: background .2s, transform .2s;
+    transition: background .2s;
     cursor: default;
   }
   .case-item.linked { cursor: pointer; }
-  .case-item.linked:hover { background: var(--accent-light); transform: translateX(4px); }
-  .case-num { font-family: var(--serif); font-size: 13px; color: var(--ink-4); margin-bottom: 10px; }
-  .case-title { font-family: var(--serif); font-size: clamp(18px, 2.5vw, 24px); margin-bottom: 4px; letter-spacing: -.01em; }
-  .case-product-desc { font-size: 14px; color: var(--ink-3); line-height: 1.6; margin-bottom: 20px; }
-  .case-meta { display: flex; flex-direction: column; gap: 10px; }
+  .case-item.linked:hover { background: var(--accent-light); }
+  .case-item-inner { width: 100%; position: relative; }
+  .case-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
+  .case-num { font-family: var(--serif); font-size: 13px; color: var(--ink-4); margin-bottom: 6px; }
+  .case-arrow { font-size: 18px; color: var(--ink-4); transition: transform .2s, color .2s; position: absolute; top: 0; right: 0; }
+  .case-item.linked:hover .case-arrow { transform: translate(3px,-3px); color: var(--accent); }
+  .case-title { font-family: var(--serif); font-size: clamp(22px, 3vw, 28px); letter-spacing: -.01em; margin-bottom: 8px; }
+  .case-card-image {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 24px;
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .case-card-image-device {
+    border-radius: 2px;
+    display: flex; align-items: center; justify-content: center;
+    padding: 16px;
+    min-height: 160px;
+  }
+  .case-card-image-device img { width: 100%; object-fit: contain; display: block; }
+  .case-product-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 32px;
+    align-items: center;
+    margin-bottom: 0;
+  }
+  .case-product-img { flex-shrink: 0; }
+  .case-product-img img { width: 100%; display: block; object-fit: contain; }
+  .case-product-desc-wrap { display: flex; flex-direction: column; gap: 4px; }
+  .case-product-info { display: flex; flex-direction: column; gap: 16px; }
+  .case-ui-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 32px;
+    padding-top: 28px;
+    border-top: 0.5px solid var(--line);
+  }
+  .case-ui-item { display: flex; flex-direction: column; gap: 8px; }
+  .case-ui-item img { width: 100%; display: block; border-radius: 2px; border: 0.5px solid var(--line); }
+  .case-ui-caption { font-size: 11px; color: var(--ink-4); letter-spacing: .03em; }
+  .case-product-desc { font-size: 14px; color: var(--ink-3); line-height: 1.6; margin-bottom: 0; }
+  .case-product-desc-wrap { display: flex; align-items: flex-start; }
+  .case-meta { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; margin-top: 24px; }
   .case-meta-item { display: grid; grid-template-columns: 90px 1fr; gap: 16px; align-items: baseline; }
   .case-meta-label { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-4); padding-top: 2px; }
   .case-meta-value { font-size: 13px; color: var(--ink-2); line-height: 1.6; }
   .case-desc { font-size: 14px; color: var(--ink-2); line-height: 1.65; max-width: 480px; }
-  .case-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 16px; }
+  .case-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0; }
   .case-tag { font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink-3); }
-  .case-arrow { font-size: 20px; color: var(--ink-4); margin-top: 4px; transition: transform .2s, color .2s; }
-  .case-item.linked:hover .case-arrow { transform: translate(3px,-3px); color: var(--accent); }
   .case-status { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-4); margin-top: 16px; display: block; }
 
   /* ── EDUCATION ── */
@@ -296,13 +338,15 @@
 
 <!-- NAV -->
 <nav id="nav">
-  <span class="nav-name">Watson Hsu</span>
-  <ul class="nav-links">
-    <li><a href="#hero">About</a></li>
-    <li><a href="#experience">Experience</a></li>
-    <li><a href="#work">Work</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
+  <div class="nav-inner">
+    <span class="nav-name">Watson Hsu</span>
+    <ul class="nav-links">
+      <li><a href="#hero">About</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#work">Work</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -318,8 +362,6 @@
           UX Designer
           <span class="hero-title-sep">·</span>
           Product Designer
-          <span class="hero-title-sep">·</span>
-          Taipei, Taiwan
         </div>
         <div class="hero-contact-row">
           <a href="mailto:a12090429@gmail.com" class="hero-contact-item">
@@ -399,7 +441,7 @@
 <!-- EXPERIENCE -->
 <section id="experience">
   <div class="container">
-    <div class="section-eyebrow reveal">Work Experience</div>
+    <div class="section-eyebrow reveal">Experience</div>
     <h2 class="reveal">Work Experience</h2>
 
     <!-- TXOne -->
@@ -462,11 +504,27 @@
     <div class="cases-grid reveal">
 
       <!-- Product 1 -->
-      <div class="case-item">
-        <div>
-          <div class="case-num">01</div>
-          <div class="case-title">Portable Inspector</div>
-          <p class="case-product-desc">A portable USB malware scanner for factory machines — no software installation required.</p>
+      <div class="case-item linked" onclick="window.location.href='pi.html'">
+        <div class="case-item-inner">
+          <!-- 編號+標題+描述 左邊，產品照 右邊 -->
+          <div class="case-product-row">
+            <div class="case-product-desc-wrap">
+              <div class="case-num">01</div>
+              <div class="case-title">Portable Inspector</div>
+              <p class="case-product-desc">A portable USB malware scanner for factory machines — no software installation required.</p>
+            </div>
+            <div class="case-product-img">
+              <img src="pi-device.png" alt="Portable Inspector device">
+            </div>
+          </div>
+
+          <!-- Arrow -->
+          <div class="case-item-header" style="margin-top: -8px; margin-bottom: 0;">
+            <div></div>
+            <div class="case-arrow">↗</div>
+          </div>
+
+          <!-- Users, Design Focus, Tags 在下方 -->
           <div class="case-meta">
             <div class="case-meta-item">
               <span class="case-meta-label">Users</span>
@@ -482,17 +540,36 @@
             <span class="case-tag">Operator-centered</span>
             <span class="case-tag">Policy-driven Design</span>
           </div>
-          <span class="case-status">↳ Case study coming soon</span>
+
+          <!-- UI 預覽 -->
+          <div class="case-ui-row">
+            <div class="case-ui-item">
+              <img src="pi-ui-1.png" alt="UI before redesign">
+              <div class="case-ui-caption">Before — Previous UI</div>
+            </div>
+            <div class="case-ui-item">
+              <img src="pi-ui-fts.png" alt="FTS Scan UI">
+              <div class="case-ui-caption">After — FTS Scan (Redesign)</div>
+            </div>
+          </div>
+
         </div>
-        <div class="case-arrow">↗</div>
       </div>
 
       <!-- Product 2 -->
       <div class="case-item">
-        <div>
-          <div class="case-num">02</div>
-          <div class="case-title">Safe Port</div>
-          <p class="case-product-desc">A kiosk scanning station deployed at factory entrances and high-security zones.</p>
+        <div class="case-item-inner">
+          <div class="case-arrow">↗</div>
+          <div class="case-product-row">
+            <div class="case-product-desc-wrap">
+              <div class="case-num">02</div>
+              <div class="case-title">Safe Port</div>
+              <p class="case-product-desc">A kiosk scanning station deployed at factory entrances and high-security zones.</p>
+            </div>
+            <div class="case-product-img">
+              <img src="sp-device.png" alt="Safe Port device">
+            </div>
+          </div>
           <div class="case-meta">
             <div class="case-meta-item">
               <span class="case-meta-label">Users</span>
@@ -509,14 +586,13 @@
             <span class="case-tag">Zero Onboarding</span>
             <span class="case-tag">0 to Launch</span>
           </div>
-          <span class="case-status">↳ Case study coming soon</span>
         </div>
-        <div class="case-arrow">↗</div>
       </div>
 
       <!-- Product 3 -->
       <div class="case-item">
-        <div>
+        <div class="case-item-inner">
+          <div class="case-arrow">↗</div>
           <div class="case-num">03</div>
           <div class="case-title">ElementOne</div>
           <p class="case-product-desc">A centralized OT security management platform consolidating data from Portable Inspector and Safe Port.</p>
@@ -535,9 +611,7 @@
             <span class="case-tag">RBAC Design</span>
             <span class="case-tag">0 to Launch</span>
           </div>
-          <span class="case-status">↳ Case study coming soon</span>
         </div>
-        <div class="case-arrow">↗</div>
       </div>
 
     </div>
