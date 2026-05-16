@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Safe Port — Watson Hsu</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Noto+Serif+TC:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ink: #0e0e0e; --ink-2: #3a3a3a; --ink-3: #7a7a7a; --ink-4: #b0b0b0;
+  --bg: #f5f3ee; --bg-2: #edeae3; --accent: #1a4a6b; --accent-light: #e8eff5;
+  --line: rgba(14,14,14,0.12);
+  --serif: 'DM Serif Display', 'Noto Serif TC', Georgia, serif;
+  --sans: 'DM Sans', system-ui, sans-serif;
+  --max: 900px; --pad: clamp(24px, 5vw, 64px);
+}
+html { scroll-behavior: smooth; }
+body { background: var(--bg); color: var(--ink); font-family: var(--sans); font-size: 16px; line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: var(--bg); border-bottom: 1px solid var(--line); transition: box-shadow .3s; }
+nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.06); }
+.nav-inner { max-width: calc(var(--max) + var(--pad) * 2); margin: 0 auto; padding: 20px var(--pad); display: flex; align-items: center; justify-content: space-between; }
+.nav-name { font-family: var(--serif); font-size: 18px; letter-spacing: -.02em; text-decoration: none; color: var(--ink); }
+.nav-back { font-size: 13px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color .2s; }
+.nav-back:hover { color: var(--ink); }
+
+.container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
+section { padding: 80px 0; }
+section + section { border-top: 1px solid var(--line); }
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s cubic-bezier(.16,1,.3,1), transform .7s cubic-bezier(.16,1,.3,1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+#hero { padding-top: 140px; border-top: none; }
+.hero-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.hero-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.hero-title { font-family: var(--serif); font-size: clamp(40px, 7vw, 80px); line-height: 1; letter-spacing: -.03em; margin-bottom: 8px; }
+.hero-subtitle { font-size: 12px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 32px; }
+.hero-meta-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; padding: 32px 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); margin-bottom: 48px; }
+.hero-meta-label { font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 6px; }
+.hero-meta-value { font-size: 14px; font-weight: 500; line-height: 1.5; }
+
+.device-image { width: 100%; display: flex; align-items: center; justify-content: center; padding: 24px 0; }
+.device-image img { max-width: 600px; width: 100%; display: block; }
+
+.sec-eyebrow { font-size: 11px; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 16px; display: flex; align-items: center; gap: 10px; }
+.sec-eyebrow::after { content: ''; flex: 1; height: 1px; background: var(--line); }
+.sec-title { font-family: var(--serif); font-size: clamp(28px, 4vw, 40px); line-height: 1.1; letter-spacing: -.02em; margin-bottom: 32px; }
+
+.overview-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; }
+.overview-text { font-size: 15px; color: var(--ink-2); line-height: 1.8; }
+.overview-text p + p { margin-top: 16px; }
+.overview-meta { display: flex; flex-direction: column; gap: 24px; }
+.meta-block-label { font-size: 11px; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 6px; }
+.meta-block-value { font-size: 14px; color: var(--ink-2); line-height: 1.6; }
+
+.tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.tag { font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink-3); }
+
+/* Gallery */
+.gallery { position: relative; }
+.gallery-track { display: flex; overflow: hidden; border-radius: 2px; }
+.gallery-slide { min-width: 100%; position: relative; }
+.gallery-slide img { width: 100%; display: block; border-radius: 2px; }
+.gallery-caption { font-size: 13px; color: var(--ink-3); margin-top: 12px; min-height: 20px; text-align: center; }
+.gallery-controls { display: flex; align-items: center; justify-content: center; gap: 16px; margin-top: 20px; }
+.gallery-btn { background: transparent; border: 1px solid var(--line); border-radius: 2px; width: 36px; height: 36px; cursor: pointer; font-size: 16px; color: var(--ink-3); display: flex; align-items: center; justify-content: center; transition: border-color .2s, color .2s; }
+.gallery-btn:hover { border-color: var(--ink); color: var(--ink); }
+.gallery-dots { display: flex; gap: 6px; }
+.gallery-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--ink-4); transition: background .2s; cursor: pointer; }
+.gallery-dot.active { background: var(--ink); }
+.gallery-counter { font-size: 12px; color: var(--ink-4); letter-spacing: .04em; }
+
+.back-section { padding: 60px 0; text-align: center; border-top: 1px solid var(--line); }
+.back-link { font-size: 13px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase; color: var(--ink-3); text-decoration: none; transition: color .2s; }
+.back-link:hover { color: var(--ink); }
+
+footer { border-top: 1px solid var(--line); padding: 24px var(--pad); display: flex; justify-content: space-between; font-size: 12px; color: var(--ink-4); max-width: calc(var(--max) + var(--pad) * 2); margin: 0 auto; }
+
+@media (max-width: 680px) {
+  .hero-meta-row { grid-template-columns: 1fr 1fr; }
+  .overview-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-name">Watson Hsu</a>
+    <a href="index.html#work" class="nav-back">← Back</a>
+  </div>
+</nav>
+
+<section id="hero">
+  <div class="container">
+    <div class="hero-eyebrow reveal">Product Design · 02</div>
+    <h1 class="hero-title reveal">Safe Port</h1>
+    <div class="hero-subtitle reveal">Scanning Station · KIOSK</div>
+    <div class="hero-meta-row reveal">
+      <div>
+        <div class="hero-meta-label">Product Type</div>
+        <div class="hero-meta-value">Kiosk Malware Scanning Station</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">Users</div>
+        <div class="hero-meta-value">Factory Employees & External Visitors</div>
+      </div>
+      <div>
+        <div class="hero-meta-label">My Role</div>
+        <div class="hero-meta-value">End-to-end UX Design, 0 to Launch</div>
+      </div>
+    </div>
+    <div class="device-image reveal">
+      <img src="sp-device.png" alt="Safe Port device">
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="sec-eyebrow reveal">Overview</div>
+    <div class="overview-grid reveal">
+      <div class="overview-text">
+        <p>
+          Safe Port is a kiosk-based malware scanning station deployed at factory entrances and high-security zone access points. It scans USB drives and storage devices carried by personnel before they enter the facility.
+        </p>
+        <p>
+          Unlike Portable Inspector which is operated by trained staff, Safe Port is used by anyone who enters — employees, contractors, and external visitors with no prior system familiarity. The core design challenge is delivering a completely self-guided experience that requires zero instruction.
+        </p>
+        <div class="tag-row">
+          <span class="tag">End-to-end Design</span>
+          <span class="tag">Kiosk UX</span>
+          <span class="tag">Zero Onboarding</span>
+          <span class="tag">0 to Launch</span>
+        </div>
+      </div>
+      <div class="overview-meta">
+        <div>
+          <div class="meta-block-label">Design Focus</div>
+          <div class="meta-block-value">Zero-instruction, self-guided scan experience for first-time users in a high-throughput entry environment.</div>
+        </div>
+        <div>
+          <div class="meta-block-label">Key Flows</div>
+          <div class="meta-block-value">Idle / standby state · Device insertion · Scan in progress · Scan result</div>
+        </div>
+        <div>
+          <div class="meta-block-label">Context</div>
+          <div class="meta-block-value">Factory entrance · Touch screen kiosk · Mixed user familiarity · Time-sensitive flow</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="container">
+    <div class="sec-eyebrow reveal">UI Screens</div>
+    <h2 class="sec-title reveal">Key Interfaces</h2>
+    <div class="gallery reveal">
+      <div class="gallery-track" id="gallery-track">
+        <div class="gallery-slide">
+          <img src="sp-ui-home.png" alt="Safe Port Home Screen">
+        </div>
+        <div class="gallery-slide">
+          <img src="sp-ui-plugged.png" alt="Safe Port Device Plugged">
+        </div>
+        <div class="gallery-slide">
+          <img src="sp-ui-scanning.png" alt="Safe Port Scanning">
+        </div>
+      </div>
+      <div class="gallery-caption" id="gallery-caption">Idle — Insert media or Portable Inspector</div>
+      <div class="gallery-controls">
+        <button class="gallery-btn" id="prev-btn">←</button>
+        <div class="gallery-dots" id="gallery-dots">
+          <div class="gallery-dot active" onclick="goTo(0)"></div>
+          <div class="gallery-dot" onclick="goTo(1)"></div>
+          <div class="gallery-dot" onclick="goTo(2)"></div>
+        </div>
+        <button class="gallery-btn" id="next-btn">→</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="back-section">
+  <a href="index.html#work" class="back-link">← Back to all work</a>
+</div>
+
+<footer>
+  <span>Watson Hsu · 徐華錚</span>
+  <span>© 2026</span>
+</footer>
+
+<script>
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 40));
+
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+}, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
+document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+const captions = [
+  'Idle — Insert media or Portable Inspector',
+  'Device Connected — Select scan action',
+  'Scanning in Progress — Real-time progress display'
+];
+
+let current = 0;
+const track = document.getElementById('gallery-track');
+const caption = document.getElementById('gallery-caption');
+const dots = document.querySelectorAll('.gallery-dot');
+
+function goTo(n) {
+  current = n;
+  track.scrollTo({ left: track.offsetWidth * n, behavior: 'smooth' });
+  caption.textContent = captions[n];
+  dots.forEach((d, i) => d.classList.toggle('active', i === n));
+}
+
+document.getElementById('prev-btn').onclick = () => goTo((current - 1 + 3) % 3);
+document.getElementById('next-btn').onclick = () => goTo((current + 1) % 3);
+</script>
+</body>
+</html>

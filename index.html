@@ -46,39 +46,45 @@
   }
   nav.scrolled { box-shadow: 0 2px 24px rgba(0,0,0,.06); }
   .nav-inner {
-    max-width: var(--max);
+    max-width: calc(var(--max) + var(--pad) * 2);
     margin: 0 auto;
     padding: 20px var(--pad);
     display: flex; align-items: center; justify-content: space-between;
   }
   .nav-name { font-family: var(--serif); font-size: 18px; letter-spacing: -.02em; }
-  .nav-links { display: flex; gap: 32px; list-style: none; }
+  .nav-links { display: flex; align-items: center; gap: 32px; list-style: none; }
   .nav-links a {
     font-size: 13px; font-weight: 500; letter-spacing: .04em; text-transform: uppercase;
     color: var(--ink-3); text-decoration: none; transition: color .2s;
   }
   .nav-links a:hover { color: var(--ink); }
   .nav-dropdown { position: relative; }
-  .nav-dropdown > a { display: flex; align-items: center; gap: 4px; cursor: pointer; }
-  .nav-dropdown > a::after { content: '▾'; font-size: 10px; }
+  .nav-dropdown > a { display: inline-flex; align-items: center; gap: 5px; cursor: pointer; }
+  .nav-dropdown > a::after { content: '⌄'; font-size: 13px; line-height: 1; margin-top: -2px; opacity: .7; }
   .nav-dropdown-menu {
     display: none;
-    position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%);
-    background: var(--bg); border: 0.5px solid var(--line);
-    border-radius: var(--border-radius-md, 4px);
-    box-shadow: 0 8px 24px rgba(0,0,0,.08);
-    min-width: 200px; padding: 6px 0;
+    position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+    padding-top: 8px;
     z-index: 200;
+  }
+  .nav-dropdown-menu-inner {
+    background: var(--bg);
+    border: 0.5px solid var(--line);
+    border-radius: 6px;
+    box-shadow: 0 12px 32px rgba(0,0,0,.06);
+    min-width: 160px;
+    padding: 4px 0;
+    overflow: hidden;
   }
   .nav-dropdown:hover .nav-dropdown-menu { display: block; }
   .nav-dropdown-menu a {
-    display: block; padding: 8px 16px;
-    font-size: 12px; letter-spacing: .03em; text-transform: none;
+    display: block; padding: 9px 18px;
+    font-size: 12px; font-weight: 400; letter-spacing: .02em; text-transform: none;
     color: var(--ink-2); text-decoration: none;
-    transition: background .15s, color .15s;
+    transition: color .15s;
     white-space: nowrap;
   }
-  .nav-dropdown-menu a:hover { background: var(--bg-2); color: var(--ink); }
+  .nav-dropdown-menu a:hover { color: var(--ink); background: transparent; }
 
   /* ── LAYOUT ── */
   .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
@@ -318,9 +324,15 @@
     padding-top: 28px;
     border-top: 0.5px solid var(--line);
   }
+  .case-ui-row.three-col { grid-template-columns: 1fr 1fr 1fr; }
   .case-ui-item { display: flex; flex-direction: column; gap: 8px; }
-  .case-ui-item img { width: 100%; display: block; border-radius: 2px; border: 0.5px solid var(--line); }
-  .case-ui-caption { font-size: 11px; color: var(--ink-4); letter-spacing: .03em; }
+  .case-ui-item img {
+    width: 100%; display: block; border-radius: 2px; border: 0.5px solid var(--line);
+    cursor: zoom-in;
+    transition: opacity .2s, border-color .2s;
+  }
+  .case-ui-item img:hover { opacity: .85; border-color: var(--ink-4); }
+  .case-ui-caption { font-size: 11px; color: var(--ink-4); letter-spacing: .02em; line-height: 1.5; }
   .case-product-desc { font-size: 14px; color: var(--ink-3); line-height: 1.6; margin-bottom: 0; }
   .case-product-desc-wrap { display: flex; align-items: flex-start; }
   .case-meta { display: flex; flex-direction: column; gap: 12px; margin-bottom: 20px; margin-top: 24px; }
@@ -331,6 +343,30 @@
   .case-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 0; }
   .case-tag { font-size: 11px; font-weight: 500; letter-spacing: .05em; text-transform: uppercase; padding: 4px 10px; border: 1px solid var(--line); border-radius: 2px; color: var(--ink-3); }
   .case-status { font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-4); margin-top: 16px; display: block; }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    display: none;
+    position: fixed; inset: 0; z-index: 1000;
+    background: rgba(0,0,0,.85);
+    align-items: center; justify-content: center;
+    cursor: zoom-out;
+  }
+  .lightbox.open { display: flex; }
+  .lightbox img {
+    max-width: 90vw; max-height: 90vh;
+    object-fit: contain;
+    border-radius: 2px;
+    cursor: default;
+    box-shadow: 0 24px 80px rgba(0,0,0,.5);
+  }
+  .lightbox-close {
+    position: absolute; top: 24px; right: 24px;
+    color: rgba(255,255,255,.6); font-size: 28px;
+    cursor: pointer; line-height: 1;
+    transition: color .2s;
+  }
+  .lightbox-close:hover { color: #fff; }
 
   /* ── EDUCATION ── */
   .edu-item { padding: 32px 0; }
@@ -389,9 +425,11 @@
       <li class="nav-dropdown">
         <a href="#work">Designs</a>
         <div class="nav-dropdown-menu">
-          <a href="e1.html">ElementOne</a>
-          <a href="sp.html">Safe Port</a>
-          <a href="pi.html">Portable Inspector</a>
+          <div class="nav-dropdown-menu-inner">
+            <a href="e1.html">ElementOne</a>
+            <a href="sp.html">Safe Port</a>
+            <a href="pi.html">Portable Inspector</a>
+          </div>
         </div>
       </li>
       <li><a href="#contact">Contact</a></li>
@@ -498,7 +536,7 @@
     <div class="exp-item reveal">
       <div class="exp-header">
         <div class="exp-role">UX Designer</div>
-        <div class="exp-period">2019 – Present</div>
+        <div class="exp-period">2020 – Present</div>
       </div>
       <div class="exp-company">TXOne Networks · B2B OT Cybersecurity · Taipei</div>
       <p class="exp-summary">As the sole UX designer, I own the full design process — from problem definition and wireframing through cross-functional negotiation with PM, RD, and JM, to final delivery. My work spans two parallel tracks:</p>
@@ -554,7 +592,7 @@
     <div class="cases-grid reveal">
 
       <!-- Product 1: ElementOne -->
-      <div class="case-item linked" onclick="window.location.href='e1.html'">
+      <div class="case-item linked" data-href="e1.html">
         <div class="case-item-inner">
           <!-- 頂部：編號 + View Project箭頭 -->
           <div class="case-item-top">
@@ -588,11 +626,25 @@
             <span class="case-tag">RBAC Design</span>
             <span class="case-tag">0 to Launch</span>
           </div>
+          <div class="case-ui-row three-col">
+            <div class="case-ui-item">
+              <img src="eo-ui-asset.png" alt="ElementOne Asset Management">
+              <div class="case-ui-caption">Asset Management — monitor asset info collected by Portable Inspector, including OS version, installed applications, updates, and vulnerabilities</div>
+            </div>
+            <div class="case-ui-item">
+              <img src="eo-ui-device-list.png" alt="ElementOne Device Management">
+              <div class="case-ui-caption">Device Management — manage registered scanning devices and their update and sync status</div>
+            </div>
+            <div class="case-ui-item">
+              <img src="eo-ui-logs.png" alt="ElementOne Scan Logs">
+              <div class="case-ui-caption">Scan Log Management — consolidate scan logs synced from Portable Inspector and Safe Port, with report export capability</div>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Product 2: Safe Port -->
-      <div class="case-item linked" onclick="window.location.href='sp.html'">
+      <div class="case-item linked" data-href="sp.html">
         <div class="case-item-inner">
           <div class="case-item-top">
             <div class="case-num">02</div>
@@ -627,11 +679,25 @@
             <span class="case-tag">Zero Onboarding</span>
             <span class="case-tag">0 to Launch</span>
           </div>
+          <div class="case-ui-row three-col">
+            <div class="case-ui-item">
+              <img src="sp-ui-home.png" alt="Safe Port idle screen">
+              <div class="case-ui-caption">Idle — standby screen prompting device insertion</div>
+            </div>
+            <div class="case-ui-item">
+              <img src="sp-ui-plugged.png" alt="Safe Port multi-action">
+              <div class="case-ui-caption">Multi-action selection after connecting a removable media</div>
+            </div>
+            <div class="case-ui-item">
+              <img src="sp-ui-scanning.png" alt="Safe Port scanning">
+              <div class="case-ui-caption">Scan in progress — core malware scanning flow</div>
+            </div>
+          </div>
         </div>
       </div>
 
       <!-- Product 3: Portable Inspector -->
-      <div class="case-item linked" onclick="window.location.href='pi.html'">
+      <div class="case-item linked" data-href="pi.html">
         <div class="case-item-inner">
           <div class="case-item-top">
             <div class="case-num">03</div>
@@ -742,31 +808,71 @@
   <span>UX Designer · Taipei, Taiwan</span>
 </footer>
 
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <span class="lightbox-close" id="lightbox-close">✕</span>
+  <img src="" alt="" id="lightbox-img">
+</div>
+
 <script>
-  // Nav scroll effect
   const nav = document.getElementById('nav');
   window.addEventListener('scroll', () => {
     nav.classList.toggle('scrolled', window.scrollY > 40);
   });
 
-  // Reveal on scroll
   const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry, i) => {
+    entries.forEach(entry => {
       if (entry.isIntersecting) {
-        // Stagger siblings
-        const siblings = entry.target.parentElement.querySelectorAll('.reveal');
-        siblings.forEach((el, idx) => {
-          if (el === entry.target) {
-            setTimeout(() => el.classList.add('visible'), idx * 80);
-          }
-        });
         entry.target.classList.add('visible');
         observer.unobserve(entry.target);
       }
     });
   }, { threshold: 0.1, rootMargin: '0px 0px -60px 0px' });
-
   document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Lightbox
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightbox-img');
+
+  function openLightbox(src, alt) {
+    lightboxImg.src = src;
+    lightboxImg.alt = alt;
+    lightbox.classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+
+  function closeLightbox() {
+    lightbox.classList.remove('open');
+    document.body.style.overflow = '';
+  }
+
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => {
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  // Make UI preview images clickable for lightbox
+  document.querySelectorAll('.case-ui-item img').forEach(img => {
+    img.style.cursor = 'zoom-in';
+    img.addEventListener('click', (e) => {
+      e.stopPropagation();
+      openLightbox(img.src, img.alt);
+    });
+  });
+
+  // Card click — go to project page, but not when clicking images
+  document.querySelectorAll('.case-item.linked').forEach(card => {
+    card.removeAttribute('onclick');
+    const href = card.getAttribute('onclick')?.match(/'(.+)'/)?.[1];
+    card.addEventListener('click', (e) => {
+      if (e.target.tagName === 'IMG' && e.target.closest('.case-ui-item')) return;
+      const url = card.dataset.href;
+      if (url) window.location.href = url;
+    });
+  });
 </script>
 </body>
 </html>
