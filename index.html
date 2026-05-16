@@ -58,6 +58,27 @@
     color: var(--ink-3); text-decoration: none; transition: color .2s;
   }
   .nav-links a:hover { color: var(--ink); }
+  .nav-dropdown { position: relative; }
+  .nav-dropdown > a { display: flex; align-items: center; gap: 4px; cursor: pointer; }
+  .nav-dropdown > a::after { content: '▾'; font-size: 10px; }
+  .nav-dropdown-menu {
+    display: none;
+    position: absolute; top: calc(100% + 12px); left: 50%; transform: translateX(-50%);
+    background: var(--bg); border: 0.5px solid var(--line);
+    border-radius: var(--border-radius-md, 4px);
+    box-shadow: 0 8px 24px rgba(0,0,0,.08);
+    min-width: 200px; padding: 6px 0;
+    z-index: 200;
+  }
+  .nav-dropdown:hover .nav-dropdown-menu { display: block; }
+  .nav-dropdown-menu a {
+    display: block; padding: 8px 16px;
+    font-size: 12px; letter-spacing: .03em; text-transform: none;
+    color: var(--ink-2); text-decoration: none;
+    transition: background .15s, color .15s;
+    white-space: nowrap;
+  }
+  .nav-dropdown-menu a:hover { background: var(--bg-2); color: var(--ink); }
 
   /* ── LAYOUT ── */
   .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--pad); }
@@ -224,23 +245,45 @@
   }
   .exp-bullets strong { color: var(--ink); font-weight: 500; }
 
-  /* ── CASES ── */
-  .cases-grid { display: flex; flex-direction: column; gap: 2px; }
+  .cases-grid { display: flex; flex-direction: column; gap: 16px; }
   .case-item {
-    background: var(--bg-2); border-radius: 2px;
+    background: var(--bg-2); border-radius: 4px;
     padding: 40px 44px;
     text-decoration: none; color: inherit;
-    transition: background .2s;
     cursor: default;
+    position: relative;
+    border: 1px solid transparent;
+    transition: border-color .2s;
   }
   .case-item.linked { cursor: pointer; }
-  .case-item.linked:hover { background: var(--accent-light); }
+  .case-item.linked:hover { border-color: var(--ink-4); }
+  .case-item-top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 20px;
+  }
+  .case-item-action {
+    display: flex; align-items: center; gap: 6px;
+    flex-shrink: 0;
+  }
+  .case-view-label {
+    font-size: 11px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase;
+    color: var(--ink-4);
+    transition: color .2s;
+    white-space: nowrap;
+  }
+  .case-view-arrow {
+    font-size: 12px;
+    color: var(--ink-4);
+    transition: color .2s, transform .2s;
+    line-height: 1;
+  }
+  .case-item.linked:hover .case-view-label { color: var(--ink); }
+  .case-item.linked:hover .case-view-arrow { color: var(--ink); transform: translate(2px, -2px); }
   .case-item-inner { width: 100%; position: relative; }
   .case-item-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 8px; }
   .case-num { font-family: var(--serif); font-size: 13px; color: var(--ink-4); margin-bottom: 6px; }
-  .case-arrow { font-size: 18px; color: var(--ink-4); transition: transform .2s, color .2s; position: absolute; top: 0; right: 0; }
-  .case-item.linked:hover .case-arrow { transform: translate(3px,-3px); color: var(--accent); }
-  .case-title { font-family: var(--serif); font-size: clamp(22px, 3vw, 28px); letter-spacing: -.01em; margin-bottom: 8px; }
+  .case-title { font-family: var(--serif); font-size: clamp(22px, 3vw, 28px); letter-spacing: -.01em; margin-bottom: 4px; }
+  .case-subtitle { font-size: 12px; font-weight: 500; letter-spacing: .06em; text-transform: uppercase; color: var(--ink-4); margin-bottom: 10px; }
   .case-card-image {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -343,7 +386,14 @@
     <ul class="nav-links">
       <li><a href="#hero">About</a></li>
       <li><a href="#experience">Experience</a></li>
-      <li><a href="#work">Work</a></li>
+      <li class="nav-dropdown">
+        <a href="#work">Designs</a>
+        <div class="nav-dropdown-menu">
+          <a href="e1.html">ElementOne</a>
+          <a href="sp.html">Safe Port</a>
+          <a href="pi.html">Portable Inspector</a>
+        </div>
+      </li>
       <li><a href="#contact">Contact</a></li>
     </ul>
   </div>
@@ -503,67 +553,58 @@
 
     <div class="cases-grid reveal">
 
-      <!-- Product 1 -->
-      <div class="case-item linked" onclick="window.location.href='pi.html'">
+      <!-- Product 1: ElementOne -->
+      <div class="case-item linked" onclick="window.location.href='e1.html'">
         <div class="case-item-inner">
-          <!-- 編號+標題+描述 左邊，產品照 右邊 -->
-          <div class="case-product-row">
-            <div class="case-product-desc-wrap">
+          <!-- 頂部：編號 + View Project箭頭 -->
+          <div class="case-item-top">
+            <div class="case-item-top-left">
               <div class="case-num">01</div>
-              <div class="case-title">Portable Inspector</div>
-              <p class="case-product-desc">A portable USB malware scanner for factory machines — no software installation required.</p>
             </div>
-            <div class="case-product-img">
-              <img src="pi-device.png" alt="Portable Inspector device">
+            <div class="case-item-action">
+              <span class="case-view-label">View Project</span>
+              <span class="case-view-arrow">↗</span>
             </div>
           </div>
-
-          <!-- Arrow -->
-          <div class="case-item-header" style="margin-top: -8px; margin-bottom: 0;">
-            <div></div>
-            <div class="case-arrow">↗</div>
-          </div>
-
-          <!-- Users, Design Focus, Tags 在下方 -->
+          <!-- 產品名稱 -->
+          <div class="case-title">ElementOne</div>
+          <div class="case-subtitle">Central Management Console · Web</div>
+          <!-- 描述 -->
+          <p class="case-product-desc">A centralized OT security management platform consolidating data from Portable Inspector and Safe Port.</p>
+          <!-- Users & Design Focus -->
           <div class="case-meta">
             <div class="case-meta-item">
               <span class="case-meta-label">Users</span>
-              <span class="case-meta-value">Factory operators executing routine security tasks based on administrator-defined SOPs</span>
+              <span class="case-meta-value">Security administrators and team leads managing operations at different levels</span>
             </div>
             <div class="case-meta-item">
               <span class="case-meta-label">Design Focus</span>
-              <span class="case-meta-value">Empower administrators to build structured, foolproof workflows that operators can follow independently</span>
+              <span class="case-meta-value">Translate complex device status, asset inventory, and scan logs into clear, role-appropriate dashboards</span>
             </div>
           </div>
+          <!-- Tags -->
           <div class="case-tags">
             <span class="case-tag">End-to-end Design</span>
-            <span class="case-tag">Operator-centered</span>
-            <span class="case-tag">Policy-driven Design</span>
+            <span class="case-tag">RBAC Design</span>
+            <span class="case-tag">0 to Launch</span>
           </div>
-
-          <!-- UI 預覽 -->
-          <div class="case-ui-row">
-            <div class="case-ui-item">
-              <img src="pi-ui-1.png" alt="UI before redesign">
-              <div class="case-ui-caption">Before — Previous UI</div>
-            </div>
-            <div class="case-ui-item">
-              <img src="pi-ui-fts.png" alt="FTS Scan UI">
-              <div class="case-ui-caption">After — FTS Scan (Redesign)</div>
-            </div>
-          </div>
-
         </div>
       </div>
 
-      <!-- Product 2 -->
-      <div class="case-item">
+      <!-- Product 2: Safe Port -->
+      <div class="case-item linked" onclick="window.location.href='sp.html'">
         <div class="case-item-inner">
-          <div class="case-arrow">↗</div>
+          <div class="case-item-top">
+            <div class="case-num">02</div>
+            <div class="case-item-action">
+              <span class="case-view-label">View Project</span>
+              <span class="case-view-arrow">↗</span>
+            </div>
+          </div>
           <div class="case-product-row">
             <div class="case-product-desc-wrap">
-              <div class="case-num">02</div>
               <div class="case-title">Safe Port</div>
+              <div class="case-subtitle">Scanning Station · KIOSK</div>
               <p class="case-product-desc">A kiosk scanning station deployed at factory entrances and high-security zones.</p>
             </div>
             <div class="case-product-img">
@@ -589,27 +630,50 @@
         </div>
       </div>
 
-      <!-- Product 3 -->
-      <div class="case-item">
+      <!-- Product 3: Portable Inspector -->
+      <div class="case-item linked" onclick="window.location.href='pi.html'">
         <div class="case-item-inner">
-          <div class="case-arrow">↗</div>
-          <div class="case-num">03</div>
-          <div class="case-title">ElementOne</div>
-          <p class="case-product-desc">A centralized OT security management platform consolidating data from Portable Inspector and Safe Port.</p>
+          <div class="case-item-top">
+            <div class="case-num">03</div>
+            <div class="case-item-action">
+              <span class="case-view-label">View Project</span>
+              <span class="case-view-arrow">↗</span>
+            </div>
+          </div>
+          <div class="case-product-row">
+            <div class="case-product-desc-wrap">
+              <div class="case-title">Portable Inspector</div>
+              <div class="case-subtitle">Portable Scanning Tool · GUI</div>
+              <p class="case-product-desc">A portable USB malware scanner for factory machines — no software installation required.</p>
+            </div>
+            <div class="case-product-img">
+              <img src="pi-device.png" alt="Portable Inspector device">
+            </div>
+          </div>
           <div class="case-meta">
             <div class="case-meta-item">
               <span class="case-meta-label">Users</span>
-              <span class="case-meta-value">Security administrators and team leads managing operations at different levels</span>
+              <span class="case-meta-value">Factory operators executing routine security tasks based on administrator-defined SOPs</span>
             </div>
             <div class="case-meta-item">
               <span class="case-meta-label">Design Focus</span>
-              <span class="case-meta-value">Translate complex device status, asset inventory, and scan logs into clear, role-appropriate dashboards</span>
+              <span class="case-meta-value">Empower administrators to build structured, foolproof workflows that operators can follow independently</span>
             </div>
           </div>
           <div class="case-tags">
             <span class="case-tag">End-to-end Design</span>
-            <span class="case-tag">RBAC Design</span>
-            <span class="case-tag">0 to Launch</span>
+            <span class="case-tag">Operator-centered</span>
+            <span class="case-tag">Policy-driven Design</span>
+          </div>
+          <div class="case-ui-row">
+            <div class="case-ui-item">
+              <img src="pi-ui-1.png" alt="UI before redesign">
+              <div class="case-ui-caption">Before — Previous UI</div>
+            </div>
+            <div class="case-ui-item">
+              <img src="pi-ui-fts.png" alt="FTS Scan UI">
+              <div class="case-ui-caption">After — FTS Scan (Redesign)</div>
+            </div>
           </div>
         </div>
       </div>
